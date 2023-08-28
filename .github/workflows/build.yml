@@ -1,0 +1,35 @@
+name: "Build Plan"
+
+on:
+    push:
+        branches:
+            - "master"
+
+jobs:
+    converttopdf:
+        name: Build PDF Plan
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+
+            - name: Merge All Chapters Together
+              run: sed -e '$s/$/\n/' -s ./chapters/*.md > deineDatei.md
+
+            - name: Convert Markdown To PDF
+              uses: baileyjm02/markdown-to-pdf@v1
+              with:
+                  input_dir: deineDatei.md
+                  output_dir: pdfs
+                  images_dir: ./assets/images
+                  # for example <img src="./images/file-name.png">
+                  image_import: ./assets/images
+                  # Default is true, can set to false to only get PDF files
+                  build_html: false
+                  theme: ./assets/style.css
+                  extend_default_theme: true
+            - name: Upload PDF To Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: PDF
+                  path: pdfs
