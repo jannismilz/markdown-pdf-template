@@ -4,7 +4,7 @@ sudo apt-get update
 sudo apt-get install pdftk -y
 
 input_pdf="output.pdf"
-output_pdf="final.pdf"
+output_pdf="pdfs/final.pdf"
 
 # Get total number of pages
 total_pages=$(pdftk "$input_pdf" dump_data | grep "NumberOfPages" | awk '{print $2}')
