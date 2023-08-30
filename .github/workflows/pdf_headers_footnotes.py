@@ -1,3 +1,4 @@
+import io
 from PyPDF2 import PdfReader, PdfWriter
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
