@@ -13,13 +13,16 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v3
 
-            - name: Merge All Chapters Together
-              run: sed -e '$s/$/\n/' -s ./chapters/*.md > deineDatei.md
-
-            - name: Convert Markdown To PDF
+            - name: Select Front Page
+              run: |
+                find ./chapters -type f -name '00_*.md' -print0 |
+                xargs -0 cat |
+                sed -e '$s|$|\n\n<div class="pagebreak"></div>\n|' > frontpage.md
+            
+            - name: Convert Frontpage Markdown To PDF
               uses: baileyjm02/markdown-to-pdf@v1
               with:
-                  input_dir: deineDatei.md
+                  input_dir: frontpage.md
                   output_dir: pdfs
                   images_dir: ./assets/images
                   # for example <img src="./images/file-name.png">
@@ -28,6 +31,34 @@ jobs:
                   build_html: false
                   theme: ./assets/style.css
                   extend_default_theme: true
+
+            - name: Merge All Chapters Together
+              # Automatically split multiple pages by a pagebreak element
+              run: |
+                find ./chapters -type f -name '*.md' ! -name '00_*.md' -print0 |
+                xargs -0 cat |
+                sed -e '$s|$|\n\n<div class="pagebreak"></div>\n|' > chapters.md
+
+            - name: Convert Chapters Markdown To PDF
+              uses: baileyjm02/markdown-to-pdf@v1
+              with:
+                  input_dir: chapters.md
+                  output_dir: pdfs
+                  images_dir: ./assets/images
+                  # for example <img src="./images/file-name.png">
+                  image_import: ./assets/images
+                  # Default is true, can set to false to only get PDF files
+                  build_html: false
+                  theme: ./assets/style.css
+                  extend_default_theme: true
+                  table_of_contents: true
+
+            - name: Merge PDFs Together
+              run: |
+                apt-get update
+                apt-get install -y poppler-utils
+                pdfunite frontpage.pdf chapters.pdf output.pdf
+
             - name: Upload PDF To Artifacts
               uses: actions/upload-artifact@v3
               with:
