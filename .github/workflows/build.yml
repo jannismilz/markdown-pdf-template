@@ -37,7 +37,7 @@ jobs:
               run: |
                 find ./chapters -type f -name '*.md' ! -name '00_*.md' -print0 |
                 sort -z |
-                xargs -0 awk 'FNR==1 && NR!=1 {print "\n<div class=\"pagebreak\"></div>\n"} {print}' > chapters.md
+                xargs -0 awk 'FNR==1 {print "\n<div class=\"pagebreak\"></div>\n"} {print}' > chapters.md
 
             - name: Convert Chapters Markdown To PDF
               uses: baileyjm02/markdown-to-pdf@v1
