@@ -1,6 +1,6 @@
 from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import
 import io
 
 # Step 1: Open the PDF file and read its pages.
@@ -8,16 +8,15 @@ pdf_path = 'pdfs/chapters.pdf'
 pdf = PdfReader(pdf_path)
 
 # Step 2: Create a new PDF with page numbers.
-width, height = letter
+width, height = pdf.pages[0].mediaBox.upperRight
 output = io.BytesIO()
-c = canvas.Canvas(output, pagesize=letter)
+c = canvas.Canvas(output, pagesize=(width, height))
 
 for i in range(len(pdf.pages)):
     c.setFont("Helvetica", 10)
     c.drawString(37, 30, "Jannis Milz")
     c.drawRightString(width - 54, 30, f"{str(i + 1)} / {len(pdf.pages)}")
-    c.setHorizScale(100)
-    c.drawRightString(width - 50, height - 30, "Ein Name")
+    c.drawRightString(width - 50, height - 5, "Ein Name")
     c.showPage()
 
 c.save()
