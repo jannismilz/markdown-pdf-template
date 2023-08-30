@@ -17,7 +17,7 @@ jobs:
               run: |
                 find ./chapters -type f -name '00_*.md' -print0 |
                 xargs -0 cat |
-                sed -e '$s|$|\n\n<div class="pagebreak"></div>\n|' > frontpage.md
+                sed -e '$s|$|\n\n|' > frontpage.md
             
             - name: Convert Frontpage Markdown To PDF
               uses: baileyjm02/markdown-to-pdf@v1
@@ -37,7 +37,7 @@ jobs:
               run: |
                 find ./chapters -type f -name '*.md' ! -name '00_*.md' -print0 |
                 xargs -0 cat |
-                sed -e '$s|$|\n\n<div class="pagebreak"></div>\n|' > chapters.md
+                sed -e '$s|$|\n\n|' > chapters.md
 
             - name: Convert Chapters Markdown To PDF
               uses: baileyjm02/markdown-to-pdf@v1
