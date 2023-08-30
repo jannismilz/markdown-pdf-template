@@ -58,10 +58,10 @@ jobs:
               uses: actions/setup-python@v4
               with:
                 python-version: '3.x'
-                run: |
-                  pip install PyPDF2 reportlab
             - name: Run Python Script
-              run: python3 ./.github/workflows/pdf_headers_footnotes.py
+              run: |
+                pip3 install PyPDF2 reportlab
+                python3 ./.github/workflows/pdf_headers_footnotes.py
 
             - name: Merge PDFs Together
               run: |
