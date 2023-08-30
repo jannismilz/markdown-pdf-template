@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo apt-get update
+sudo apt-get install pdftk -y
+
 input_pdf="output.pdf"
 output_pdf="final.pdf"
 

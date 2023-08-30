@@ -67,7 +67,7 @@ jobs:
 
             - name: Add Headers And Footnotes
               run: |
-                chmod +x ./.github/workflows/pdf_header_footnote.sh
+                sudo chmod +x ./.github/workflows/pdf_header_footnote.sh
                 ./.github/workflows/pdf_header_footnote.sh
               shell: bash
 
