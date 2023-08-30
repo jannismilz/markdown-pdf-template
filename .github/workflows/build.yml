@@ -55,8 +55,7 @@ jobs:
 
             - name: Merge PDFs Together
               run: |
-                apt-get update
-                apt-get install -y poppler-utils
+                sudo apt-get install -y poppler-utils
                 pdfunite frontpage.pdf chapters.pdf output.pdf
 
             - name: Upload PDF To Artifacts
