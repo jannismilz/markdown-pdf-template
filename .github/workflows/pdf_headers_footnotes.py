@@ -14,8 +14,8 @@ c = canvas.Canvas(output, pagesize=(width, height))
 for i in range(len(pdf.pages)):
     c.setFont("Helvetica", 10)
     c.drawString(37, 30, "Jannis Milz")
-    c.drawRightString(width - 54, 30, f"{str(i + 1)} / {len(pdf.pages)}")
-    c.drawRightString(width - 50, height - 5, "Ein Name")
+    c.drawRightString(parseInt(width) - 54, 30, f"{str(i + 1)} / {len(pdf.pages)}")
+    c.drawRightString(parseInt(width) - 50, parseInt(height) - 5, "Ein Name")
     c.showPage()
 
 c.save()
