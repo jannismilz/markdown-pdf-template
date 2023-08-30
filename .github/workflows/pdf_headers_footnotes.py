@@ -38,7 +38,6 @@ for page_number in range(total_pages):
 
     # Calculate the vertical offset to ensure alignment at the bottom
     offset_y = 20  # Adjust this value to control the vertical offset
-    new_page.mergeTranslatedPage(page, 0, offset_y)
 
     new_page.add_transformation(Transformation().translate(0, offset_y));
 
