@@ -43,7 +43,7 @@ jobs:
               uses: baileyjm02/markdown-to-pdf@v1
               with:
                   input_dir: chapters.md
-                  output_dir: pdfs
+                  output_dir: pdfs/
                   images_dir: ./assets/images
                   # for example <img src="./images/file-name.png">
                   image_import: ./assets/images
