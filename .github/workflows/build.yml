@@ -68,7 +68,7 @@ jobs:
             - name: Add Headers And Footnotes
               run: |
                 sudo chmod +x ./.github/workflows/pdf_header_footnote.sh
-                ./.github/workflows/pdf_header_footnote.sh
+                sudo ./.github/workflows/pdf_header_footnote.sh
               shell: bash
 
             - name: Upload PDF To Artifacts
