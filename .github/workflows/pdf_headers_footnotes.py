@@ -4,7 +4,7 @@ from reportlab.lib.pagesizes import letter
 import io
 
 # Step 1: Open the PDF file and read its pages.
-pdf_path = '../../output.pdf'
+pdf_path = 'pdfs/chapters.pdf'
 pdf = PdfReader(pdf_path)
 
 # Step 2: Create a new PDF with page numbers.
