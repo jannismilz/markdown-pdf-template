@@ -1,6 +1,5 @@
 from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import
 import io
 
 # Step 1: Open the PDF file and read its pages.
