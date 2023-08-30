@@ -34,8 +34,12 @@ for page_number in range(total_pages):
 
     # Merge the footer PDF with the page
     page = pdf.pages[page_number]
-    page.merge_page(new_pdf.pages[0])
-    output.add_page(page)
+    new_page = new_pdf.pages[0]
+
+    # Calculate the vertical offset to ensure alignment at the bottom
+    offset_y = 20  # Adjust this value to control the vertical offset
+    new_page.mergeTranslatedPage(page, 0, offset_y)
+    output.add_page(new_page)
 
 # Save the final output PDF
 with open(output_pdf, "wb") as output_stream:
