@@ -7,7 +7,7 @@ pdf_path = 'pdfs/chapters.pdf'
 pdf = PdfReader(pdf_path)
 
 # Step 2: Create a new PDF with page numbers.
-width, height = pdf.pages[0].mediaBox.upperRight
+width, height = pdf.pages[0].mediabox.upperRight
 output = io.BytesIO()
 c = canvas.Canvas(output, pagesize=(width, height))
 
