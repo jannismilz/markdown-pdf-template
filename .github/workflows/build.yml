@@ -54,7 +54,10 @@ jobs:
                   table_of_contents: true
             
             - name: Testing step
-              run: ls -l pdfs
+              run: |
+                ls -l pdfs
+                ls -l
+                find . -type f -name 'chapters.pdf'
 
             - name: Merge PDFs Together
               run: |
