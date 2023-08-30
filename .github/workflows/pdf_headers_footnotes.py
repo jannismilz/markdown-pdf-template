@@ -1,51 +1,36 @@
-import io
-from PyPDF2 import PdfReader, PdfWriter, Transformation
+from PyPDF2 import PdfReader, PdfWriter
+from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
-from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.units import inch
-from reportlab.platypus import Paragraph, SimpleDocTemplate
+import io
 
-input_pdf = "pdfs/chapters.pdf"
-output_pdf = "pdfs/chapters.pdf"
+# Step 1: Open the PDF file and read its pages.
+pdf_path = 'pdfs/chapters.pdf'
+pdf = PdfReader(pdf_path)
 
-# Get total number of pages
-pdf = PdfReader(input_pdf)
-total_pages = len(pdf.pages)
+# Step 2: Create a new PDF with page numbers.
+width, height = letter
+output = io.BytesIO()
+c = canvas.Canvas(output, pagesize=letter)
 
-# Create a new PDF with headers and footers
-output = PdfWriter()
-style = getSampleStyleSheet()["Normal"]
-footer_style = style.clone("Footer")
-footer_style.alignment = 2  # Right-aligned
+for i in range(len(pdf.pages)):
+    c.setFont("Helvetica", 10)
+    c.drawString(width - 50, 30, str(i + 1))
+    c.showPage()
 
-for page_number in range(total_pages):
-    packet = io.BytesIO()
-    # Create a new PDF with the footer content
-    footer = SimpleDocTemplate(packet, pagesize=letter)
-    formatted_footer = "<para align='right'>Page {} of {}</para>".format(
-        page_number + 1, total_pages
-    )
-    footer.build([Paragraph(formatted_footer, footer_style)])
+c.save()
 
-    # Move to the beginning of the "virtual" file
-    packet.seek(0)
-    new_pdf = PdfReader(packet)
+# Move to the beginning of the StringIO buffer
+output.seek(0)
+new_pdf = PdfReader(output)
 
-    # Merge the footer PDF with the page
-    page = pdf.pages[page_number]
-    new_page = new_pdf.pages[0]
+# Step 3: Merge the original PDF and the new PDF with page numbers.
+pdf_writer = PdfWriter()
 
-    # Calculate the vertical offset to ensure alignment at the bottom
-    offset_y = 20  # Adjust this value to control the vertical offset
+for i in range(len(pdf.pages)):
+    page = pdf.pages[i]
+    page.merge_page(new_pdf.pages[i])
+    pdf_writer.add_page(page)
 
-    new_page.add_transformation(Transformation().translate(0, offset_y));
-    new_page.merge_page(page)
-
-    output.add_page(new_page)
-
-# Save the final output PDF
-with open(output_pdf, "wb") as output_stream:
-    output.write(output_stream)
-
-print("Done.")
+# Step 4: Write to a new PDF file.
+with open('pdfs/chapters.pdf', 'wb') as fh:
+    pdf_writer.write(fh)
