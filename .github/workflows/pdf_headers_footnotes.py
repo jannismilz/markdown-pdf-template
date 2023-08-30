@@ -4,7 +4,7 @@ from reportlab.lib.pagesizes import letter
 import io
 
 # Step 1: Open the PDF file and read its pages.
-pdf_path = 'pdfs/chapters.pdf'
+pdf_path = '../../output.pdf'
 pdf = PdfReader(pdf_path)
 
 # Step 2: Create a new PDF with page numbers.
@@ -14,7 +14,9 @@ c = canvas.Canvas(output, pagesize=letter)
 
 for i in range(len(pdf.pages)):
     c.setFont("Helvetica", 10)
-    c.drawString(width - 50, 30, str(i + 1))
+    c.drawString(width - 50, height - 30, "Ein Name")
+    c.drawString(50, 30, "Jannis Milz")
+    c.drawString(width - 50, 30, f"{str(i + 1)} / {len(pdf.pages)}")
     c.showPage()
 
 c.save()
