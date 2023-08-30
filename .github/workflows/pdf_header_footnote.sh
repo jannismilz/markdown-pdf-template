@@ -6,13 +6,18 @@ sudo apt-get install pdftk paps -y
 input_pdf="pdfs/output.pdf"
 output_pdf="pdfs/final.pdf"
 
+temp_dir="temp_pages"
+
+# Create a temporary directory if it doesn't exist
+mkdir -p "$temp_dir"
+
 # Get total number of pages
 total_pages=$(pdftk "$input_pdf" dump_data | grep "NumberOfPages" | awk '{print $2}')
 
 # Loop through each page
 for ((page=1; page<=total_pages; page++)); do
     # Create a temporary file for the modified page
-    temp_page="temp_page_$page.pdf"
+    temp_page="$temp_dir/temp_page_$page.pdf"
 
     # Add pagination to the current page
     pdftk "$input_pdf" cat $page output "$temp_page"
@@ -27,7 +32,9 @@ for ((page=1; page<=total_pages; page++)); do
     else
         pdftk "$output_pdf" "$temp_page" cat output "$output_pdf"
     fi
-
-    # Clean up temporary file
-    rm "$temp_page"
 done
+
+# Clean up temporary directory
+rm -r "$temp_dir"
+
+echo "Done."
