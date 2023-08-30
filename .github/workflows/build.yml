@@ -62,6 +62,7 @@ jobs:
             - name: Merge PDFs Together
               run: |
                 sudo apt-get install -y poppler-utils
+                touch output.pdf
                 pdfunite pdfs/frontpage.pdf pdfs/chapters.pdf pdfs/output.pdf
                 rm pdfs/frontpage.pdf pdfs/chapters.pdf
 
@@ -69,4 +70,4 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: PDF
-                  path: pdfs
+                  path: pdfs/output.pdf
