@@ -3,7 +3,7 @@
 sudo apt-get update
 sudo apt-get install pdftk paps -y
 
-input_pdf="pdfs/output.pdf"
+input_pdf="pdfs/chapters.pdf"
 output_pdf="pdfs/final.pdf"
 temp_dir="temp_pages"
 
@@ -19,7 +19,7 @@ for ((page=1; page<=total_pages; page++)); do
     temp_page="$temp_dir/temp_page_$page.pdf"
 
     # Add pagination to the current page
-    pdftk "$input_pdf" cat $page output "$temp_page"
+    # pdftk "$input_pdf" cat $page output "$temp_page"
 
     # Add page number to the bottom right corner
     pdftk "$temp_page" stamp <(echo "[$page / $total_pages]" | \
