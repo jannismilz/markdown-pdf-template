@@ -59,18 +59,18 @@ jobs:
               with:
                 python-version: '3.x'
             - name: Run Python Script
-              run: python3 pdf_headers_footnotes.py
+              run: python3 ./.github/workflows/pdf_headers_footnotes.py
 
             - name: Merge PDFs Together
               run: |
                 sudo apt-get install -y poppler-utils
                 sudo pdfunite pdfs/frontpage.pdf pdfs/chapters.pdf pdfs/output.pdf
 
-            - name: Add Headers And Footnotes
-              run: |
-                sudo chmod +x ./.github/workflows/pdf_header_footnote.sh
-                sudo ./.github/workflows/pdf_header_footnote.sh
-              shell: bash
+            # - name: Add Headers And Footnotes
+            #   run: |
+            #     sudo chmod +x ./.github/workflows/pdf_header_footnote.sh
+            #     sudo ./.github/workflows/pdf_header_footnote.sh
+            #   shell: bash
 
             - name: Upload PDF To Artifacts
               uses: actions/upload-artifact@v3
