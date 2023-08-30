@@ -10,7 +10,7 @@ output_pdf="final.pdf"
 total_pages=$(pdftk "$input_pdf" dump_data | grep "NumberOfPages" | awk '{print $2}')
 
 # Loop through each page
-for ((page=1; page<=$total_pages; page++)); do
+for ((page=1; page<=total_pages; page++)); do
     # Create a temporary file for the modified page
     temp_page="temp_page_$page.pdf"
 
