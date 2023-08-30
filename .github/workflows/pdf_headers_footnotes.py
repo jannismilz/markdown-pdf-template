@@ -40,6 +40,7 @@ for page_number in range(total_pages):
     offset_y = 20  # Adjust this value to control the vertical offset
 
     new_page.add_transformation(Transformation().translate(0, offset_y));
+    new_page.merge_page(page, expand)
 
     output.add_page(new_page)
 
