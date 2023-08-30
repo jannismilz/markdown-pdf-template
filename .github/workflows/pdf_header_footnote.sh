@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get install pdftk -y
+sudo apt-get install pdftk paps -y
 
 input_pdf="pdfs/output.pdf"
 output_pdf="pdfs/final.pdf"
