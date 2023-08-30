@@ -54,11 +54,13 @@ jobs:
                   extend_default_theme: true
                   table_of_contents: true
             
-            - name: Testing step
-              run: |
-                ls -l pdfs
-                ls -l
-                find . -type f -name 'chapters.pdf'
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.x'
+            - name: Run Python Script
+              uses: jannekem/run-python-script-action@v1
+              run: python3 pdf_headers_footnotes.py
 
             - name: Merge PDFs Together
               run: |
