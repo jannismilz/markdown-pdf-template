@@ -52,6 +52,9 @@ jobs:
                   theme: ./assets/style.css
                   extend_default_theme: true
                   table_of_contents: true
+            
+            - name: Testing step
+              run: ls -l pdfs
 
             - name: Merge PDFs Together
               run: |
