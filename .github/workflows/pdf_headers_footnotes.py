@@ -41,14 +41,14 @@ for i in range(len(pdf.pages)):
 
     # If frontpage
     if i is 0:
-        c.drawRightString(int(width) - 37, 30, f"Seite {str(printRoman(i + 1))}")
+        c.drawRightString(int(width) - 37, 30, f"{str(printRoman(i + 1))}")
     else:
         c.drawString(37, 30, "Jannis Milz")
         # If page not ToC
         if i + page_count >= len(pdf.pages):
-            c.drawRightString(int(width) - 37, 30, f"Seite {str((i + page_count) - len(pdf.pages) + 1)} / {page_count}")
+            c.drawRightString(int(width) - 37, 30, f"{str((i + page_count) - len(pdf.pages) + 1)}") # / {page_count}
         else:
-            c.drawRightString(int(width) - 37, 30, f"Seite {str(printRoman(i + 1))}")
+            c.drawRightString(int(width) - 37, 30, f"{str(printRoman(i + 1))}")
         c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
 
     c.showPage()
