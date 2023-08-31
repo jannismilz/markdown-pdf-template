@@ -15,7 +15,7 @@ for i in range(len(pdf.pages)):
     c.setFont("Helvetica", 10)
     c.drawString(37, 30, "Jannis Milz")
     c.drawRightString(int(width) - 37, 30, f"{str(i + 1)} / {len(pdf.pages)}")
-    c.drawRightString(int(width) - 37, int(height) - 40, "Ein Name")
+    c.drawRightString(int(width) - 37, int(height) - 30, "Ein Name")
     c.showPage()
 
 c.save()
