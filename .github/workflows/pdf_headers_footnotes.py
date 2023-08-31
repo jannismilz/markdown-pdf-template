@@ -35,8 +35,8 @@ new_pdf = PdfReader(output)
 pdf_writer = PdfWriter()
 
 for i in range(page_count):
-    page = pdf.pages[page_count - 1 - i]
-    page.merge_page(new_pdf.pages[page_count - 1 - i])
+    page = pdf.pages[page_count - i]
+    page.merge_page(new_pdf.pages[page_count - i])
     pdf_writer.add_page(page)
 
 # Step 4: Write to a new PDF file.
