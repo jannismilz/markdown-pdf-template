@@ -75,19 +75,20 @@ jobs:
                   extend_default_theme: true
                   table_of_contents: true
 
-            - name: Setup Python
-              uses: actions/setup-python@v4
-              with:
-                  python-version: "3.x"
-            - name: Run Python Script
-              run: |
-                  sudo pip3 install PyPDF2 reportlab
-                  sudo python3 ./.github/workflows/pdf_headers_footnotes.py
-
             - name: Merge PDFs Together
               run: |
                   sudo apt-get install -y poppler-utils
                   sudo pdfunite pdfs/frontpage.pdf pdfs/chapters.pdf pdfs/output.pdf
+
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.x"
+
+            - name: Run Python Script
+              run: |
+                  sudo pip3 install PyPDF2 reportlab
+                  sudo python3 ./.github/workflows/pdf_headers_footnotes.py
 
             # - name: Add Headers And Footnotes
             #   run: |
