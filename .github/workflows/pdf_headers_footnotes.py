@@ -22,7 +22,7 @@ for i in range(len(pdf.pages)):
     c.setFont("Helvetica", 10)
     c.drawString(37, 30, "Jannis Milz")
     if i + page_count >= len(pdf.pages):
-        c.drawRightString(int(width) - 37, 30, f"{str(len(pdf.pages) - (i + page_count) + 1)} / {page_count}")
+        c.drawRightString(int(width) - 37, 30, f"{str((i + page_count) - len(pdf.pages) + 1)} / {page_count}")
     c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
     c.showPage()
 
