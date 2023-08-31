@@ -37,6 +37,7 @@ jobs:
               run: |
                   find ./chapters -type f -name '*.md' ! -name '00_*.md' -print0 |
                   sort -z |
+                  mkdir temp |
                   xargs -0 awk 'FNR==1 && NR!=1 {print "\n<div class=\"pagebreak\"></div>\n"} {print}' > temp/chapters.md
 
             - name: Convert Chapters Markdown To PDF Without ToC
