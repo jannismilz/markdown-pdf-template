@@ -3,27 +3,9 @@ from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.colors import Color
 import io
 
-def printRoman(number):
-    num = [1, 4, 5, 9, 10, 40, 50, 90,
-        100, 400, 500, 900, 1000]
-    sym = ["i", "iv", "v", "ix", "x", "xl",
-        "l", "xc", "c", "cd", "d", "cm", "m"]
-    i = 12
-    result = ""
-    while number:
-        div = number // num[i]
-        number %= num[i]
- 
-        while div:
-            result += sym[i]
-            div -= 1
-        i -= 1
-
-    return result
-
 # Step 1: Open the PDF file and read its pages.
-pdf_path = 'pdfs/output.pdf'
-pdf_pc_path = 'pdfs/chapters.pdf'
+pdf_path = 'pdfs/chapters.pdf'
+pdf_pc_path = 'pdfs/temp/chapters.pdf'
 pdf = PdfReader(pdf_path)
 pdf_pc = PdfReader(pdf_pc_path)
 
@@ -38,19 +20,10 @@ c = Canvas(output, pagesize=(width, height))
 for i in range(len(pdf.pages)):
     c.setFillColor(Color(0, 0, 0, alpha=0.5))
     c.setFont("Helvetica", 10)
-
-    # If frontpage
-    if i is 0:
-        c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(page_count)}")
-    else:
-        c.drawString(37, 30, "Jannis Milz")
-        # If page not ToC
-        if i + page_count >= len(pdf.pages):
-            c.drawRightString(int(width) - 37, 30, f"Seite {str((i + page_count) - len(pdf.pages) + 1)} / {page_count}")
-        else:
-            c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(page_count)}")
-        c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
-
+    c.drawString(37, 30, "Jannis Milz")
+    if i + page_count >= len(pdf.pages):
+        c.drawRightString(int(width) - 37, 30, f"{str((i + page_count) - len(pdf.pages) + 1)} / {page_count}")
+    c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
     c.showPage()
 
 c.save()
