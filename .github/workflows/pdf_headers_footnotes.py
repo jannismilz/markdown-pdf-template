@@ -40,17 +40,13 @@ for i in range(len(pdf.pages)):
     c.setFont("Helvetica", 10)
 
     # If frontpage
-    if i == 0:
-        c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(page_count)}")
-    else:
-        c.drawString(37, 30, "Jannis Milz")
-        # If page not ToC
-        if i + page_count >= len(pdf.pages):
-            c.drawRightString(int(width) - 37, 30, f"Seite {str((i + page_count) - len(pdf.pages) + 1)} / {page_count}")
-        else:
-            c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(page_count)}")
-        c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
+    if i == 1:
+        c.drawRightString(int(width) - 37, 30, f"{printRoman(page_count)}")
 
+    c.drawString(37, 30, "Jannis Milz")
+    if i + page_count >= len(pdf.pages):
+        c.drawRightString(int(width) - 37, 30, f"{str((i + page_count) - len(pdf.pages) + 1)} / {page_count}")
+    c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
     c.showPage()
 
 c.save()
