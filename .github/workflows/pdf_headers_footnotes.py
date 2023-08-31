@@ -21,7 +21,8 @@ for i in range(page_count):
     c.setFillColor(Color(0, 0, 0, alpha=0.5))
     c.setFont("Helvetica", 10)
     c.drawString(37, 30, "Jannis Milz")
-    c.drawRightString(int(width) - 37, 30, f"{str(i + 1)} / {page_count}")
+    if i + page_count >= len(pdf.pages):
+        c.drawRightString(int(width) - 37, 30, f"{str(i + 1)} / {page_count}")
     c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
     c.showPage()
 
@@ -36,8 +37,8 @@ pdf_writer = PdfWriter()
 
 for i in range(len(pdf.pages)):
     page = pdf.pages[i]
-    if i + page_count >= len(pdf.pages):
-        page.merge_page(new_pdf.pages[len(pdf.pages) - (i + page_count)])
+    # if i + page_count >= len(pdf.pages):
+    page.merge_page(new_pdf.pages[len(pdf.pages) - (i + page_count)])
     pdf_writer.add_page(page)
 
 # Step 4: Write to a new PDF file.
