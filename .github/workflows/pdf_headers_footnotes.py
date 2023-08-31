@@ -7,7 +7,7 @@ import io
 pdf_path = 'pdfs/chapters.pdf'
 pdf_pc_path = 'pdfs/temp/chapters.pdf'
 pdf = PdfReader(pdf_path)
-pdf_pc = PdfReader(pdf_path)
+pdf_pc = PdfReader(pdf_pc_path)
 
 # Use temp file without ToC to get final page count
 page_count = len(pdf_pc.pages)
