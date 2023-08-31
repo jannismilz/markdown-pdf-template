@@ -17,7 +17,7 @@ width, height = pdf.pages[0].mediabox.upper_right
 output = io.BytesIO()
 c = Canvas(output, pagesize=(width, height))
 
-for i in range(page_count):
+for i in range(len(pdf.pages)):
     c.setFillColor(Color(0, 0, 0, alpha=0.5))
     c.setFont("Helvetica", 10)
     c.drawString(37, 30, "Jannis Milz")
