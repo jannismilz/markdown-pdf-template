@@ -40,7 +40,7 @@ for i in range(len(pdf.pages)):
     c.setFont("Helvetica", 10)
 
     # If frontpage
-    if i == 0:
+    if i is 0:
         c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(page_count)}")
     else:
         c.drawString(37, 30, "Jannis Milz")
