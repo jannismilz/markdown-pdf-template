@@ -15,10 +15,10 @@ jobs:
 
             - name: Select Front Page
               run: |
-                find ./chapters -type f -name '00_*.md' -print0 |
-                xargs -0 cat |
-                sed -e '$s|$|\n\n|' > frontpage.md
-            
+                  find ./chapters -type f -name '00_*.md' -print0 |
+                  xargs -0 cat |
+                  sed -e '$s|$|\n\n|' > frontpage.md
+
             - name: Convert Frontpage Markdown To PDF
               uses: baileyjm02/markdown-to-pdf@v1
               with:
@@ -35,11 +35,25 @@ jobs:
             - name: Merge All Chapters Together
               # Automatically split multiple pages by a pagebreak element
               run: |
-                find ./chapters -type f -name '*.md' ! -name '00_*.md' -print0 |
-                sort -z |
-                xargs -0 awk 'FNR==1 {print "\n<div class=\"pagebreak\"></div>\n"} {print}' > chapters.md
+                  find ./chapters -type f -name '*.md' ! -name '00_*.md' -print0 |
+                  sort -z |
+                  xargs -0 awk 'FNR==1 {print "\n<div class=\"pagebreak\"></div>\n"} {print}' > chapters.md
 
-            - name: Convert Chapters Markdown To PDF
+            - name: Convert Chapters Markdown To PDF Without ToC
+              uses: baileyjm02/markdown-to-pdf@v1
+              with:
+                  input_dir: chapters.md
+                  output_dir: pdfs/temp/
+                  images_dir: assets/images
+                  # for example <img src="./images/file-name.png">
+                  image_import: ../assets/images
+                  # Default is true, can set to false to only get PDF files
+                  build_html: false
+                  theme: ./assets/style.css
+                  template: ./template/template.html
+                  extend_default_theme: true
+
+            - name: Convert Chapters Markdown To PDF With ToC
               uses: baileyjm02/markdown-to-pdf@v1
               with:
                   input_dir: chapters.md
@@ -53,20 +67,20 @@ jobs:
                   template: ./template/template.html
                   extend_default_theme: true
                   table_of_contents: true
-            
+
             - name: Setup Python
               uses: actions/setup-python@v4
               with:
-                python-version: '3.x'
+                  python-version: "3.x"
             - name: Run Python Script
               run: |
-                sudo pip3 install PyPDF2 reportlab
-                sudo python3 ./.github/workflows/pdf_headers_footnotes.py
+                  sudo pip3 install PyPDF2 reportlab
+                  sudo python3 ./.github/workflows/pdf_headers_footnotes.py
 
             - name: Merge PDFs Together
               run: |
-                sudo apt-get install -y poppler-utils
-                sudo pdfunite pdfs/frontpage.pdf pdfs/chapters.pdf pdfs/output.pdf
+                  sudo apt-get install -y poppler-utils
+                  sudo pdfunite pdfs/frontpage.pdf pdfs/chapters.pdf pdfs/output.pdf
 
             # - name: Add Headers And Footnotes
             #   run: |

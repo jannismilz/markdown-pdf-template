@@ -5,18 +5,23 @@ import io
 
 # Step 1: Open the PDF file and read its pages.
 pdf_path = 'pdfs/chapters.pdf'
+pdf_pc_path = 'pdfs/temp/chapters.pdf'
 pdf = PdfReader(pdf_path)
+pdf_pc = PdfReader(pdf_path)
+
+# Use temp file without ToC to get final page count
+page_count = len(pdf_pc.pages)
 
 # Step 2: Create a new PDF with page numbers.
 width, height = pdf.pages[0].mediabox.upper_right
 output = io.BytesIO()
 c = Canvas(output, pagesize=(width, height))
 
-for i in range(len(pdf.pages)):
+for i in range(page_count):
     c.setFillColor(Color(0, 0, 0, alpha=0.5))
     c.setFont("Helvetica", 10)
     c.drawString(37, 30, "Jannis Milz")
-    c.drawRightString(int(width) - 37, 30, f"{str(i + 1)} / {len(pdf.pages)}")
+    c.drawRightString(int(width) - 37, 30, f"{str(i + 1)} / {page_count}")
     c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
     c.showPage()
 
@@ -29,9 +34,9 @@ new_pdf = PdfReader(output)
 # Step 3: Merge the original PDF and the new PDF with page numbers.
 pdf_writer = PdfWriter()
 
-for i in range(len(pdf.pages)):
-    page = pdf.pages[i]
-    page.merge_page(new_pdf.pages[i])
+for i in range(page_count):
+    page = pdf.pages[page_count - 1 - i]
+    page.merge_page(new_pdf.pages[page_count - 1 - i])
     pdf_writer.add_page(page)
 
 # Step 4: Write to a new PDF file.
