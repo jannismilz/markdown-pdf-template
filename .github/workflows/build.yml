@@ -50,7 +50,6 @@ jobs:
                   # Default is true, can set to false to only get PDF files
                   build_html: false
                   theme: ./assets/style.css
-                  template: ./template/template.html
                   extend_default_theme: true
 
             - name: Convert Chapters Markdown To PDF With ToC
