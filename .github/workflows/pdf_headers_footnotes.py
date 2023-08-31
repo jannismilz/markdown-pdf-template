@@ -4,7 +4,6 @@ from reportlab.lib.colors import Color
 import io
 
 def printRoman(number):
-    number = int(number)
     num = [1, 4, 5, 9, 10, 40, 50, 90,
         100, 400, 500, 900, 1000]
     sym = ["i", "iv", "v", "ix", "x", "xl",
@@ -42,14 +41,14 @@ for i in range(len(pdf.pages)):
 
     # If frontpage
     if i is 0:
-        c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(i)}")
+        c.drawRightString(int(width) - 37, 30, f"Seite {str(printRoman(i))}")
     else:
         c.drawString(37, 30, "Jannis Milz")
         # If page not ToC
         if i + page_count >= len(pdf.pages):
             c.drawRightString(int(width) - 37, 30, f"Seite {str((i + page_count) - len(pdf.pages) + 1)} / {page_count}")
         else:
-            c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(printRoman(i))}")
+            c.drawRightString(int(width) - 37, 30, f"Seite {str(printRoman(i))}")
         c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
 
     c.showPage()
