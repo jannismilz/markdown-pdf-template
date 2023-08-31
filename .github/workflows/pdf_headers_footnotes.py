@@ -23,7 +23,7 @@ def printRoman(number):
 
 # Step 1: Open the PDF file and read its pages.
 pdf_path = 'pdfs/output.pdf'
-pdf_pc_path = 'pdfs/chapters.pdf'
+pdf_pc_path = 'pdfs/temp/chapters.pdf'
 pdf = PdfReader(pdf_path)
 pdf_pc = PdfReader(pdf_pc_path)
 
@@ -41,14 +41,14 @@ for i in range(len(pdf.pages)):
 
     # If frontpage
     if i is 0:
-        c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(page_count)}")
+        c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(i)}")
     else:
         c.drawString(37, 30, "Jannis Milz")
         # If page not ToC
         if i + page_count >= len(pdf.pages):
             c.drawRightString(int(width) - 37, 30, f"Seite {str((i + page_count) - len(pdf.pages) + 1)} / {page_count}")
         else:
-            c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(page_count)}")
+            c.drawRightString(int(width) - 37, 30, f"Seite {printRoman(printRoman(i))}")
         c.drawRightString(int(width) - 37, int(height) - 35, "Ein Name")
 
     c.showPage()
