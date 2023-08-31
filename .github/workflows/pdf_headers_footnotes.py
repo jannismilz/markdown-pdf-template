@@ -1,5 +1,6 @@
 from PyPDF2 import PdfReader, PdfWriter
-from reportlab.pdfgen import canvas
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib.colors import Color
 import io
 
 # Step 1: Open the PDF file and read its pages.
@@ -9,9 +10,10 @@ pdf = PdfReader(pdf_path)
 # Step 2: Create a new PDF with page numbers.
 width, height = pdf.pages[0].mediabox.upper_right
 output = io.BytesIO()
-c = canvas.Canvas(output, pagesize=(width, height))
+c = Canvas(output, pagesize=(width, height))
 
 for i in range(len(pdf.pages)):
+    c.setFillColor(Color(0, 0, 0, alpha=0.5))
     c.setFont("Helvetica", 10)
     c.drawString(37, 30, "Jannis Milz")
     c.drawRightString(int(width) - 37, 30, f"{str(i + 1)} / {len(pdf.pages)}")
