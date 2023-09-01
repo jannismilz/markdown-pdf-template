@@ -28,7 +28,7 @@ jobs:
                   # for example <img src="./images/file-name.png">
                   image_import: ../assets/images
                   # Default is true, can set to false to only get PDF files
-                  # build_html: false
+                  build_html: false
                   theme: ./assets/style.css
                   extend_default_theme: true
 
@@ -38,13 +38,13 @@ jobs:
                   mkdir -p temp &&
                   find ./chapters -type f -name '*.md' ! -name '00_*.md' -print0 |
                   sort -z |
-                  xargs -0 awk 'FNR==1 && NR!=1 {print "\n<div class=\"pagebreak\"></div>\n"} {print}' > temp/chapters.md
+                  xargs -0 awk 'FNR==1 && NR!=1 {print "\n<div class=\"pagebreak\"></div>\n"} {print}' > temp/noToC.md
 
             - name: Convert Chapters Markdown To PDF Without ToC
               uses: baileyjm02/markdown-to-pdf@v1
               with:
-                  input_dir: temp/chapters.md
-                  output_dir: pdfs/temp/
+                  input_dir: temp/noToC.md
+                  output_dir: pdfs/
                   images_dir: assets/images
                   # for example <img src="./images/file-name.png">
                   image_import: ../assets/images
@@ -100,4 +100,4 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: PDF
-                  path: pdfs
+                  path: pdfs/output.pdf

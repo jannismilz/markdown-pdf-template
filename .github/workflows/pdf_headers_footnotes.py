@@ -22,13 +22,13 @@ def printRoman(number):
     return result
 
 # Step 1: Open the PDF file and read its pages.
-pdf_path = 'pdfs/output.pdf'
-pdf_pc_path = 'pdfs/temp/chapters.pdf'
-pdf = PdfReader(pdf_path)
-pdf_pc = PdfReader(pdf_pc_path)
+chapters_pdf_path = 'pdfs/chapters.pdf'
+page_count_pdf_path = 'pdfs/noToC.pdf'
+pdf = PdfReader(chapters_pdf_path)
+page_count_pdf = PdfReader(page_count_pdf_path)
 
 # Use temp file without ToC to get final page count
-page_count = len(pdf_pc.pages)
+page_count = len(page_count_pdf.pages)
 
 # Step 2: Create a new PDF with page numbers.
 width, height = pdf.pages[0].mediabox.upper_right
@@ -70,5 +70,5 @@ for i in range(len(pdf.pages)):
     pdf_writer.add_page(page)
 
 # Step 4: Write to a new PDF file.
-with open(pdf_path, 'wb') as fh:
+with open(chapters_pdf_path, 'wb') as fh:
     pdf_writer.write(fh)
