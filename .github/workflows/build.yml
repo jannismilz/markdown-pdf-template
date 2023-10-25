@@ -1,13 +1,15 @@
-name: "Build Plan"
+name: "Build Document"
 
 on:
     push:
         branches:
             - "master"
+    release:
+        types: [published]
 
 jobs:
     converttopdf:
-        name: Build PDF Plan
+        name: Build PDF Document
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository
@@ -75,29 +77,17 @@ jobs:
                   extend_default_theme: true
                   table_of_contents: true
 
-            - name: Setup Python
-              uses: actions/setup-python@v4
-              with:
-                  python-version: "3.x"
-
-            - name: Run Python Script
-              run: |
-                  sudo pip3 install PyPDF2 reportlab
-                  sudo python3 ./.github/workflows/pdf_headers_footnotes.py
+            - name: Add Header and Footers
+              run: sudo bash ./.github/workflows/headerFooter.sh -a 'Samichlaus Dietlikon' -t 'Neue Webseite Dokumentation' -v ${{ github.event.release.tag_name || 'dev' }}
 
             - name: Merge PDFs Together
               run: |
-                  sudo apt-get install -y poppler-utils
-                  sudo pdfunite pdfs/frontpage.pdf pdfs/chapters.pdf pdfs/output.pdf
-
-            # - name: Add Headers And Footnotes
-            #   run: |
-            #     sudo chmod +x ./.github/workflows/pdf_header_footnote.sh
-            #     sudo ./.github/workflows/pdf_header_footnote.sh
-            #   shell: bash
+                  sudo apt-get update
+                  sudo apt-get install -y pdftk
+                  sudo pdftk pdfs/frontpage.pdf pdfs/finalChapters.pdf cat output pdfs/samichlaus_documentation.pdf
 
             - name: Upload PDF To Artifacts
               uses: actions/upload-artifact@v3
               with:
                   name: PDF
-                  path: pdfs/output.pdf
+                  path: pdfs
